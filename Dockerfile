@@ -4,8 +4,8 @@ WORKDIR /usr/app
 
 COPY package*.json ./
 
-# RUN npm ci -qy
-RUN yarn start
+RUN npm ci -qy
+# RUN yarn start
 
 COPY . .
 
