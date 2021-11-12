@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import TaskDataService from "../services/task.service";
 
-export default class AddTutorial extends Component {
+export default class AddTask extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChangeTaskname = this.onChangeTaskname.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.saveTutorial = this.saveTutorial.bind(this);
-    this.newTutorial = this.newTutorial.bind(this);
+    this.saveTask = this.saveTask.bind(this);
+    this.newTask = this.newTask.bind(this);
 
     this.state = {
       id: null,
-      title: "",
+      taskname: "",
       description: "", 
       published: false,
 
@@ -19,9 +19,9 @@ export default class AddTutorial extends Component {
     };
   }
 
-  onChangeTitle(e) {
+  onChangeTaskname(e) {
     this.setState({
-      title: e.target.value
+      taskname: e.target.value
     });
   }
 
@@ -31,19 +31,19 @@ export default class AddTutorial extends Component {
     });
   }
 
-  saveTutorial() {
+  saveTask() {
     var data = {
-      title: this.state.title,
-      description: this.state.description
+      taskName: this.state.taskname,
+      taskDesc: this.state.description
     };
 
-    TutorialDataService.create(data)
+    TaskDataService.create(data)
       .then(response => {
         this.setState({
           id: response.data.id,
-          title: response.data.title,
+          taskname: response.data.taskname,
           description: response.data.description,
-          published: response.data.published,
+          status: response.data.status,
 
           submitted: true
         });
@@ -54,10 +54,10 @@ export default class AddTutorial extends Component {
       });
   }
 
-  newTutorial() {
+  newTask() {
     this.setState({
       id: null,
-      title: "",
+      taskname: "",
       description: "",
       published: false,
 
@@ -71,22 +71,22 @@ export default class AddTutorial extends Component {
         {this.state.submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newTutorial}>
+            <button className="btn btn-success" onClick={this.newTask}>
               Add
             </button>
           </div>
         ) : (
           <div>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="taskname">Taskname</label>
               <input
                 type="text"
                 className="form-control"
-                id="title"
+                id="taskname"
                 required
-                value={this.state.title}
-                onChange={this.onChangeTitle}
-                name="title"
+                value={this.state.taskname}
+                onChange={this.onChangeTaskname}
+                name="taskname"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default class AddTutorial extends Component {
               />
             </div>
 
-            <button onClick={this.saveTutorial} className="btn btn-success">
+            <button onClick={this.saveTask} className="btn btn-success">
               Submit
             </button>
           </div>
